@@ -1,8 +1,12 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import UserContextWrapper, { UserContext } from '../contexts/User';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import UserContextWrapper from '../contexts/User';
 import { MainLayout } from '../layout/Main';
 import '../styles/globals.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -10,11 +14,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Note App</title>
       </Head>
-      <UserContextWrapper>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </UserContextWrapper>
+      <QueryClientProvider client={queryClient}>
+        <UserContextWrapper>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </UserContextWrapper>
+      </QueryClientProvider>
     </>
   );
 }
