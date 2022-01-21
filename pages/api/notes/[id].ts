@@ -22,11 +22,15 @@ export default async function handler(
 
     res.status(200).json(notes);
   } else if (req.method === 'POST') {
-    console.log({ note });
     const notes = await (
       await supabase.from('notes').upsert({ ...note, user })
     ).data;
     return res.status(200).json(notes);
+  } else if (req.method === 'DELETE') {
+    const status = await (
+      await supabase.from('notes').delete().match({ id, user })
+    ).status;
+    res.status(status);
   }
 
   res.status(400).json({ message: 'Bad Request' });
