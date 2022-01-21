@@ -5,6 +5,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const notes = await (await supabase.from('notes').select()).data;
+  const { user } = req.body;
+  const notes = await (
+    await supabase.from('notes').select().filter('user', 'eq', user)
+  ).data;
   res.status(200).json(notes);
 }
