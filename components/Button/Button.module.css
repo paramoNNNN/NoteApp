@@ -1,0 +1,59 @@
+.button {
+  @apply align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 focus:outline-none;
+
+  &.large {
+    @apply px-5 py-3 rounded-lg;
+  }
+
+  &.regular {
+    @apply px-4 py-2 rounded-lg text-sm;
+  }
+
+  &.small {
+    @apply px-3 py-1 rounded-md text-sm;
+  }
+
+  &.block {
+    @apply w-full;
+  }
+
+  &.primary {
+    @apply text-white bg-blue-500 shadow-sm;
+
+    &.active {
+      @apply active:bg-blue-600 hover:bg-blue-600;
+    }
+
+    &.disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+  }
+
+  &.outline {
+    @apply bg-transparent text-blue-500 border-blue-500 border focus:outline-none;
+
+    &.active {
+      @apply hover:border-blue-400 focus:border-blue-600 active:border-blue-600;
+    }
+
+    &.disabled {
+      @apply opacity-50 cursor-not-allowed bg-gray-200;
+    }
+  }
+
+  & .icon {
+    @apply mr-2 -ml-1;
+
+    &.large {
+      @apply h-5 w-5;
+    }
+
+    &.regular {
+      @apply h-5 w-5;
+    }
+
+    &.small {
+      @apply h-3 w-3;
+    }
+  }
+}
