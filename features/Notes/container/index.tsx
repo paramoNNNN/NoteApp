@@ -1,3 +1,5 @@
+import NoteEditor from '../components/Editor';
+import type { NoteEditorFields } from '../components/Editor/@types';
 import NotesSidebar from '../components/Sidebar';
 
 const notes = [
@@ -10,10 +12,16 @@ const notes = [
 ];
 
 const NotesContainer = (): JSX.Element => {
+  const handleSubmitNote = (fields: NoteEditorFields) => {
+    console.log({ fields });
+  };
+
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
-      <div className="relative w-5/6 h-5/6 bg-white border border-gray-300 rounded-md shadow-sm">
+    <div className="h-screen w-screen flex justify-center items-center p-6">
+      <div className="flex relative w-full md:w-5/6 h-full md:h-5/6 bg-white border border-gray-300 rounded-md shadow-sm">
         <NotesSidebar notes={notes} />
+
+        <NoteEditor onSubmit={handleSubmitNote} />
       </div>
     </div>
   );
