@@ -17,11 +17,13 @@ const NotesContainer = (): JSX.Element => {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center p-6">
-      <div className="flex relative w-full md:w-5/6 h-full md:h-5/6 bg-white border border-gray-300 rounded-md shadow-sm">
-        <NotesSidebar notes={notes} />
+    <div className="flex items-center justify-center">
+      <div className="w-screen h-screen max-w-screen-xl max-h-[1200px] flex justify-center items-center p-6">
+        <div className="flex relative w-full md:w-5/6 h-full md:h-5/6 bg-white border border-gray-300 rounded-md shadow-sm">
+          <NotesSidebar notes={notes} />
 
-        <NoteEditor onSubmit={handleSubmitNote} />
+          <NoteEditor onSubmit={handleSubmitNote} />
+        </div>
       </div>
     </div>
   );
