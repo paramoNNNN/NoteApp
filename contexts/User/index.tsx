@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
+import { USER_KEY } from './consts';
 
 type Context = {
   user?: string;
@@ -15,7 +16,23 @@ type Props = {
 const UserContextWrapper = ({ children }: Props) => {
   const [user, setUser] = useState<string>();
 
-  return <UserProvider value={{ user, setUser }}>{children}</UserProvider>;
+  useEffect(() => {
+    const storedUser = localStorage?.getItem(USER_KEY);
+    if (!!storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
+
+  const handleSetUser = (username: string) => {
+    localStorage.setItem(USER_KEY, username);
+    setUser(username);
+  };
+
+  return (
+    <UserProvider value={{ user, setUser: handleSetUser }}>
+      {children}
+    </UserProvider>
+  );
 };
 
 export default UserContextWrapper;
