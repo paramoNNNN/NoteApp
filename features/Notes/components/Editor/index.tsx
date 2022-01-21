@@ -14,7 +14,7 @@ const NoteEditor = ({ onSubmit }: Props) => {
 
   return (
     <form
-      className="flex flex-col md:justify-between w-full py-5 px-8 overflow-auto space-y-5"
+      className="flex flex-col md:justify-between w-full p-6 overflow-auto space-y-5"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="space-y-5">
@@ -27,7 +27,7 @@ const NoteEditor = ({ onSubmit }: Props) => {
         <TextArea
           {...register('description', { required: 'true' })}
           inputClassName="min-h-[350px] md:min-h-[200px]"
-          placeholder="What happend today?"
+          placeholder="What happened today?"
         />
       </div>
 
