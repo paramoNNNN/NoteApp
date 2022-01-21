@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import HomeFeature from '../features/Home';
+import NotesFeature from '../features/Notes';
 
 const Home: NextPage = () => {
-  return <HomeFeature />;
+  return <NotesFeature />;
 };
 
 export default Home;
