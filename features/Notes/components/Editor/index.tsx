@@ -1,16 +1,31 @@
 import { PencilAltIcon } from '@heroicons/react/outline';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Inputs/InputField';
 import TextArea from '../../../../components/Inputs/TextAreaField';
+import { Note } from '../../../../pages/api/notes/@types';
 import type { NoteEditorFields } from './@types';
 
 type Props = {
+  note?: Note;
   onSubmit: (fields: NoteEditorFields) => void;
+  dataLoading?: boolean;
+  submitLoading?: boolean;
 };
 
-const NoteEditor = ({ onSubmit }: Props) => {
-  const { register, handleSubmit } = useForm<NoteEditorFields>();
+const NoteEditor = ({ note, onSubmit, dataLoading, submitLoading }: Props) => {
+  const { register, handleSubmit, setValue } = useForm<NoteEditorFields>({
+    defaultValues: { title: note?.title, description: note?.description },
+  });
+
+  useEffect(() => {
+    if (note) {
+      setValue('title', note.title);
+      setValue('description', note.description);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [note]);
 
   return (
     <form
@@ -37,6 +52,7 @@ const NoteEditor = ({ onSubmit }: Props) => {
           className="!px-8 w-full md:w-auto"
           size="large"
           icon={PencilAltIcon}
+          loading={submitLoading}
         >
           Save
         </Button>
