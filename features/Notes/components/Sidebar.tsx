@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Skeleton from 'react-loading-skeleton';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
 import { useBreakpoints } from '../../../hooks/useBreakpoints';
+import { Note } from '../../../pages/api/notes/@types';
 
 type Props = {
   notes?: {
@@ -11,8 +12,8 @@ type Props = {
     description: string;
   }[];
   loading?: boolean;
-  selectedNote?: string;
-  onSelect: (id: string) => void;
+  selectedNote?: Note;
+  onSelect: (id: Note) => void;
 };
 
 const NotesSidebar = ({
@@ -36,8 +37,8 @@ const NotesSidebar = ({
     setOpen(!open);
   };
 
-  const handleNoteSelect = (id: string) => {
-    onSelect(id);
+  const handleNoteSelect = (note: Note) => {
+    onSelect(note);
     if (!isLarge) {
       setOpen(false);
     }
@@ -74,12 +75,12 @@ const NotesSidebar = ({
                   className={classNames(
                     'py-4 px-8 transition-colors duration-100 cursor-pointer',
                     {
-                      'bg-gray-200 active:bg-gray-300': id === selectedNote,
+                      'bg-gray-200 active:bg-gray-300': id === selectedNote?.id,
                       'hover:bg-gray-100 active:bg-gray-200':
-                        id !== selectedNote,
+                        id !== selectedNote?.id,
                     }
                   )}
-                  onClick={() => handleNoteSelect(id)}
+                  onClick={() => handleNoteSelect({ id, title, description })}
                 >
                   <span className="text-xl font-medium">{title}</span>
                   <p className="truncate text-sm">{description}</p>
