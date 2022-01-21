@@ -89,7 +89,7 @@ const NotesSidebar = ({
           ) : (
             <>
               {[...Array(5)].map((_, index) => (
-                <div key={index} className="p-4">
+                <div key={index} className="px-4 py-[14px]">
                   <Skeleton className="h-[24px] !w-[80px]" />
                   <Skeleton className="h-[20px]" />
                 </div>
