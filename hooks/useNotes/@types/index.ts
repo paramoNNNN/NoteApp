@@ -1,3 +1,3 @@
-import { Note } from '../../../pages/api/note/@types';
+import { Note } from '../../../pages/api/notes/@types';
 
 export type GetNotesResponse = Note[];
