@@ -19,15 +19,21 @@ const NotesContainer = (): JSX.Element => {
     setActionLoading(false);
   };
 
-  const handleDeleteNote = async (noteId: string) => {
+  const handleDeleteNote = async (noteId?: string) => {
     setActionLoading(true);
-    await deleteNote(noteId);
+    if (noteId) {
+      await deleteNote(noteId);
+    }
     setSelectedNote(undefined);
     setActionLoading(false);
   };
 
   const handleNoteSelect = (note: Note) => {
     setSelectedNote(note);
+  };
+
+  const handleNewNote = () => {
+    setSelectedNote({ title: '', description: '' });
   };
 
   return (
@@ -38,6 +44,7 @@ const NotesContainer = (): JSX.Element => {
           loading={dataLoading}
           selectedNote={selectedNote}
           onSelect={handleNoteSelect}
+          onNewNote={handleNewNote}
         />
 
         <NoteEditor
