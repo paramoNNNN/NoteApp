@@ -10,7 +10,7 @@ import type { NoteEditorFields } from './@types';
 type Props = {
   note?: Note;
   onSubmit: (fields: NoteEditorFields) => void;
-  onDelete: (noteId: string) => void;
+  onDelete: (noteId?: string) => Promise<void>;
   actionLoading?: boolean;
 };
 
@@ -29,12 +29,18 @@ const NoteEditor = ({ note, onSubmit, onDelete, actionLoading }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [note]);
 
-  const handleDelete = () => {
-    if (note) {
-      onDelete(note.id);
-    }
+  const handleDelete = async () => {
+    await onDelete(note?.id);
     reset();
   };
+
+  if (!note) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <h1 className="text-4xl text-gray-400 drop-shadow-sm">Select a note</h1>
+      </div>
+    );
+  }
 
   return (
     <form
@@ -55,7 +61,7 @@ const NoteEditor = ({ note, onSubmit, onDelete, actionLoading }: Props) => {
         />
       </div>
 
-      <div className="flex justify-end space-x-4">
+      <div className="flex flex-col-reverse sm:flex-row justify-end space-y-reverse space-y-4 sm:space-y-0 sm:space-x-4">
         <Button
           type="button"
           className="!bg-red-500 hover:!bg-red-600 !px-8 w-full md:w-auto"
@@ -74,7 +80,7 @@ const NoteEditor = ({ note, onSubmit, onDelete, actionLoading }: Props) => {
           icon={PencilAltIcon}
           loading={actionLoading}
         >
-          Save
+          {note.id ? 'Update' : 'Create'}
         </Button>
       </div>
     </form>
