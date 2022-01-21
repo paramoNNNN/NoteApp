@@ -5,7 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { user } = req.body;
+  const { user } = req.query;
+  if (!user) {
+    res.status(400).json({ message: 'Bad Request' });
+  }
+
   const notes = await (
     await supabase.from('notes').select().filter('user', 'eq', user)
   ).data;
