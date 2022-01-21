@@ -6,14 +6,21 @@ import type { NoteEditorFields } from '../components/Editor/@types';
 import NotesSidebar from '../components/Sidebar';
 
 const NotesContainer = (): JSX.Element => {
-  const { isLoading: dataLoading, data, upsertNote } = useNotes();
-  const [submitLoading, setSubmitLoading] = useState<boolean>();
+  const { isLoading: dataLoading, data, upsertNote, deleteNote } = useNotes();
+  const [actionLoading, setActionLoading] = useState<boolean>();
   const [selectedNote, setSelectedNote] = useState<Note>();
 
   const handleSubmitNote = async (fields: NoteEditorFields) => {
-    setSubmitLoading(true);
-    await upsertNote({ ...selectedNote!, ...fields });
-    setSubmitLoading(false);
+    setActionLoading(true);
+    const note = await upsertNote({ ...selectedNote!, ...fields });
+    setActionLoading(false);
+  };
+
+  const handleDeleteNote = async (noteId: string) => {
+    setActionLoading(true);
+    await deleteNote(noteId);
+    setSelectedNote(undefined);
+    setActionLoading(false);
   };
 
   const handleNoteSelect = (note: Note) => {
@@ -33,8 +40,8 @@ const NotesContainer = (): JSX.Element => {
         <NoteEditor
           note={selectedNote}
           onSubmit={handleSubmitNote}
-          dataLoading={dataLoading}
-          submitLoading={submitLoading}
+          onDelete={handleDeleteNote}
+          actionLoading={actionLoading}
         />
       </div>
     </div>

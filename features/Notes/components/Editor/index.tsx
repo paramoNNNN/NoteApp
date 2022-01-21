@@ -1,4 +1,4 @@
-import { PencilAltIcon } from '@heroicons/react/outline';
+import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../../../components/Button';
@@ -10,14 +10,16 @@ import type { NoteEditorFields } from './@types';
 type Props = {
   note?: Note;
   onSubmit: (fields: NoteEditorFields) => void;
-  dataLoading?: boolean;
-  submitLoading?: boolean;
+  onDelete: (noteId: string) => void;
+  actionLoading?: boolean;
 };
 
-const NoteEditor = ({ note, onSubmit, dataLoading, submitLoading }: Props) => {
-  const { register, handleSubmit, setValue } = useForm<NoteEditorFields>({
-    defaultValues: { title: note?.title, description: note?.description },
-  });
+const NoteEditor = ({ note, onSubmit, onDelete, actionLoading }: Props) => {
+  const { register, handleSubmit, setValue, reset } = useForm<NoteEditorFields>(
+    {
+      defaultValues: { title: note?.title, description: note?.description },
+    }
+  );
 
   useEffect(() => {
     if (note) {
@@ -26,6 +28,13 @@ const NoteEditor = ({ note, onSubmit, dataLoading, submitLoading }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [note]);
+
+  const handleDelete = () => {
+    if (note) {
+      onDelete(note.id);
+    }
+    reset();
+  };
 
   return (
     <form
@@ -46,13 +55,24 @@ const NoteEditor = ({ note, onSubmit, dataLoading, submitLoading }: Props) => {
         />
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end space-x-4">
+        <Button
+          type="button"
+          className="!bg-red-500 hover:!bg-red-600 !px-8 w-full md:w-auto"
+          size="large"
+          icon={TrashIcon}
+          loading={actionLoading}
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
+
         <Button
           type="submit"
           className="!px-8 w-full md:w-auto"
           size="large"
           icon={PencilAltIcon}
-          loading={submitLoading}
+          loading={actionLoading}
         >
           Save
         </Button>
