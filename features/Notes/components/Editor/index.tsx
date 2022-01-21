@@ -33,6 +33,7 @@ const NoteEditor = ({ onSubmit }: Props) => {
 
       <div className="flex justify-end">
         <Button
+          type="submit"
           className="!px-8 w-full md:w-auto"
           size="large"
           icon={PencilAltIcon}
