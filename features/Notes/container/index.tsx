@@ -13,6 +13,9 @@ const NotesContainer = (): JSX.Element => {
   const handleSubmitNote = async (fields: NoteEditorFields) => {
     setActionLoading(true);
     const note = await upsertNote({ ...selectedNote!, ...fields });
+    if (note[0]) {
+      setSelectedNote(note[0]);
+    }
     setActionLoading(false);
   };
 
