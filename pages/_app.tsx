@@ -1,5 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import UserContextWrapper, { UserContext } from '../contexts/User';
+import { MainLayout } from '../layout/Main';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -8,7 +10,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Note App</title>
       </Head>
-      <Component {...pageProps} />
+      <UserContextWrapper>
+        <MainLayout>
+          <Component {...pageProps} />
+        </MainLayout>
+      </UserContextWrapper>
     </>
   );
 }
