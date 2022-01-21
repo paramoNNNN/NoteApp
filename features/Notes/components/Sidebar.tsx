@@ -37,7 +37,7 @@ const NotesSidebar = ({ notes }: Props): JSX.Element => {
     <div
       className={`absolute lg:relative h-full ${
         open ? 'w-full md:w-1/2 lg:w-3/12' : 'w-0'
-      } transition-all duration-200`}
+      } transition-all duration-200 bg-white rounded-md`}
     >
       <button
         className="block lg:hidden absolute -right-4 top-5 p-1.5 w-8 h-8 rounded border border-gray-200 bg-white hover:bg-gray-100 transition-colors duration-100"
